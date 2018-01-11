@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_version ">= 1.6.2"
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "Win10.NETDev"
+    config.vm.communicator = "winrm"
+
+    # Admin user name and password
+    config.winrm.username = "vagrant"
+    config.winrm.password = "vagrant"
+
+    config.vm.guest = :windows
+    config.windows.halt_timeout = 15
+
+	# Guest additions plugin config
+	config.vbguest.auto_update = true
+	config.vbguest.no_remote = false
+
+#    config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
+#    config.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+
+    config.vm.provider :virtualbox do |vb, override|
+        vb.gui = false
+        vb.customize ["modifyvm", :id, "--memory", 8192]
+        vb.customize ["modifyvm", :id, "--cpus", 4]
+        vb.customize ["modifyvm", :id, "--vram", 256]
+        
+        vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
+
+        # Enabling copy/paste to/from VM
+        vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+        vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+
+		# Add cdrom
+        vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
+
+    end
+
+  # Disable the default vagrant directory in the C:\. We don't want that.
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  # Now add the project specific and user specific directories, for easy file exchangability.
+  config.vm.synced_folder '.', 'C:/Users/vagrant/Documents/vagrant'
+  config.vm.synced_folder "#{ENV["USERPROFILE"]}/Downloads", "C:/Users/vagrant/Downloads/Host"
+  config.vm.synced_folder "#{ENV["USERPROFILE"]}/Documents", "C:/Users/vagrant/Documents/Host"
+
+  # Make sure that the key is first removed. This will make sure that no key exists when the environment setting was not set.
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    Write-Host ">>> Removing old windows key ..." -foreground Green
+    "slmgr /upk"
+  SHELL
+
+end

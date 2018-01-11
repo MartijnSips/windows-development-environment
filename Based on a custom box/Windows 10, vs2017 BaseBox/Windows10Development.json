@@ -1,0 +1,129 @@
+{
+  "_comment": "Base Box for .NET development on a Windows 10 virtual image.",
+  "variables": {
+    "vm_name": "Windows10Development",
+    "iso_url": "./iso/en_windows_10_multi-edition_version_1709_updated_nov_2017_x64_dvd_100290211.iso",
+    "iso_checksum_type": "sha1",
+    "iso_checksum": "1F958B6A80A542C82EECD918126F665AA7381D34",
+    "autounattend": "./answer_files/10/Autounattend.xml",
+    "headless": "false",
+    "username": "vagrant",
+    "password": "vagrant",
+    "memory": "8192",
+    "cpus": "4"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "name": "virtualbox-{{user `vm_name`}}",
+      "vm_name": "packer-{{user `vm_name`}}",
+      "output_directory": "output-{{user `vm_name`}}",
+      "virtualbox_version_file": ".vbox_version",
+      "headless": "{{user `headless`}}",
+      "boot_wait": "10m",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "communicator": "winrm",
+      "winrm_username": "{{ user `username` }}",
+      "winrm_password": "{{ user `password` }}",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "guest_os_type": "Windows10_64",
+      "guest_additions_mode": "attach",
+      "disk_size": 81920,
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "{{pwd}}/answer_files/soapui.varfile",
+        "{{pwd}}/scripts/Windows/install_vs2017.ps1",
+        "{{pwd}}/scripts/Windows/openssh.ps1",
+        "{{pwd}}/scripts/Windows/microsoft-updates.bat",
+        "{{pwd}}/scripts/Windows/win-updates.ps1",
+        "{{pwd}}/scripts/Windows/fixnetwork.ps1",
+        "{{pwd}}/scripts/Windows/Pinned-Applications.psm1",
+        "{{pwd}}/scripts/Windows/Set-RvShortcutToRunAsAdministrator.psm1"
+      ],
+      "vboxmanage": [
+        [ "createhd", "--format", "VMDK", "--filename", "output-{{user `vm_name`}}\\disk2.vmdk", "--size", "81920" ],
+        [ "storagectl", "{{.Name}}", "--name", "SATA Controller", "--add", "sata", "--controller", "IntelAHCI" ],
+        [ "storageattach", "{{.Name}}", "--storagectl", "SATA Controller", "--port", "1", "--type", "hdd", "--medium", "output-{{user `vm_name`}}\\disk2.vmdk" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}" ],
+        [ "modifyvm", "{{.Name}}", "--clipboard", "bidirectional" ],
+        [ "modifyvm", "{{.Name}}", "--draganddrop", "bidirectional" ],
+		[ "modifyvm", "{{.Name}}", "--vram", "256" ],
+        [ "sharedfolder", "add", "{{.Name}}", "--name", "Installers", "--hostpath", "{{pwd}}\\installers", "--automount" ]
+      ],
+      "vboxmanage_post": [
+        [ "sharedfolder", "remove", "{{.Name}}", "--name", "Installers" ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "windows-shell",
+      "inline": [
+        "certutil -f -addstore \"TrustedPublisher\" F:\\cert\\vbox-sha1.cer",
+        "F:\\VBoxWindowsAdditions /S"
+      ],
+      "pause_before": "1m"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "Enable-WindowsOptionalFeature -online -featurename IIS-WebServerRole -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename IIS-ManagementScriptingTools -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename IIS-HttpRedirect -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename WCF-HTTP-Activation45 -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename WCF-TCP-Activation45 -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename WCF-Pipe-Activation45 -All -NoRestart",
+        "Enable-WindowsOptionalFeature -online -featurename WCF-MSMQ-Activation45 -All -NoRestart"
+      ]
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
+      ]
+    },
+    {
+      "type": "windows-shell",
+      "inline": [
+        "choco install git -y",
+        "choco install soapui -y -s 'https://s3.amazonaws.com/downloads.eviware/soapuios/5.4.0/SoapUI-x64-5.4.0.exe'",
+        "choco install mssqlservermanagementstudio2014express -y",
+        "choco install sql-server-management-studio -y",
+        "choco install notepadplusplus.install -y",
+        "choco install fiddler4 -y",
+        "choco install google-chrome-x64 -y",
+        "choco install firefox -y",
+        "choco install paint.net -y",
+				"choco install eclipse -y",
+				"choco install maven -y",
+        "choco install gow -y",
+        "choco install postman -y",
+        "choco install intellijidea-community -y",
+        "choco install winmerge -y",
+				"choco install visualstudio2017enterprise -y",
+				"choco install azure-cli -y",
+				"choco install visualstudiocode -y"
+      ]
+    },
+    {
+      "type": "windows-restart"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "output": "Windows10Development-{{.Provider}}.box",
+      "vagrantfile_template": "Windows10Development-vagrantfile.template"
+    }
+  ]
+}
