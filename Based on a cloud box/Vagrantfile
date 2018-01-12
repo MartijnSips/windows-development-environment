@@ -44,12 +44,42 @@ Vagrant.configure(2) do |config|
     vm.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
   end
   
-  config.vm.synced_folder "#{ENV['USERPROFILE']}\\Documents", 'c:\\users\\vagrant\\Documents', owner: "vagrant", group: "vagrant", create: true
-  config.vm.synced_folder "#{ENV['USERPROFILE']}\\Downloads", 'c:\\users\\vagrant\\Downloads', owner: "vagrant", group: "vagrant", create: true
+  #config.vm.synced_folder "#{ENV['USERPROFILE']}\\Documents", 'c:\\users\\vagrant\\Documents', owner: "vagrant", group: "vagrant", create: true
+  #config.vm.synced_folder "#{ENV['USERPROFILE']}\\Downloads", 'c:\\users\\vagrant\\Downloads', owner: "vagrant", group: "vagrant", create: true
 
-  config.vm.synced_folder "Ansible", '/home/vagrant/Ansible', create: true, owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=664"]
-  config.vm.synced_folder "Host", '/home/vagrant/Host', create: true, owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=664"]
+  config.vm.synced_folder "scripts", 'c:\\users\\vagrant\\scripts', create: true, owner: "vagrant", group: "vagrant"
+  config.vm.synced_folder "Host", 'c:\\users\\vagrant\\Host', create: true, owner: "vagrant", group: "vagrant"
 
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+  
+    # Activate windows
+    Write-Host ">>> Fill in serial TODO ..." -foreground Green
+	# TODO!!! Fill in your windows 10 serial number here ...
+	
+	# Desktop icons can be a little bit smaller
+    Write-Host ">>> Changing the desktop icons ..." -foreground Green
+	Import-Module "c:\\users\\vagrant\\scripts\\ChangeDesktopIconSize.psm1"	
+	ChangeDesktopIconSize -IconSize 24
+	
+	# Use small taskbar icons
+    Write-Host ">>> Using small taskbar icons ..." -foreground Green
+	Import-Module "c:\\users\\vagrant\\scripts\\UseSmallTaskbarIcons.psm1"	
+	UseSmallTaskbarIcons
+	
+	Write-Host ">>> Switch keyboard layout ..." -foreground Green
+	Set-WinUserLanguageList -LanguageList en-US -force
+  SHELL
+
+  config.vm.provision :reload
+  
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    # Install all latest windows updates
+    Write-Host ">>> Running all windows updates ..." -foreground Green
+    Invoke-Expression -Command:"c:\\users\\vagrant\\scripts\\win-updates.ps1"
+  SHELL
+
+  config.vm.provision :reload
+  
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
     Write-Host ">>> Enabling some windows features ..." -foreground Green
 	Enable-WindowsOptionalFeature -online -featurename IIS-WebServerRole -All -NoRestart
@@ -61,6 +91,8 @@ Vagrant.configure(2) do |config|
     Enable-WindowsOptionalFeature -online -featurename WCF-MSMQ-Activation45 -All -NoRestart
   SHELL
 
+  config.vm.provision :reload
+  
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
     Write-Host ">>> Installing chocolatey ..." -foreground Green
 	iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
@@ -72,8 +104,8 @@ Vagrant.configure(2) do |config|
 	choco install soapui -y
 	choco install mssqlservermanagementstudio2014express -y
 	choco install sql-server-management-studio -y
-	choco install notepadplusplus.install -y
-	choco install fiddler4 -y
+	choco install notepadplusplus -y
+#	choco install fiddler4 -y
 	choco install google-chrome-x64 -y
 	choco install firefox -y
 	choco install paint.net -y
@@ -84,14 +116,37 @@ Vagrant.configure(2) do |config|
 	choco install intellijidea-community -y
 	choco install winmerge -y
 	choco install visualstudio2017enterprise -y
+	choco install visualstudio2017-workload-netweb -y
+	choco install visualstudio2017-workload-manageddesktop -y
+#	choco install visualstudio2017-workload-netcoretools -y
+#	choco install visualstudio2017-workload-webbuildtools -y
+#	choco install visualstudio2017-workload-webcrossplatform -y
+#	choco install visualstudio2017-workload-azure -y
 	choco install azure-cli -y
 	choco install visualstudiocode -y
   SHELL
   
+#  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+#    Write-Host ">>> Pinning some applications to the taskbar ..." -foreground Green
+#    Import-Module "c:\\users\\vagrant\\scripts\\Pinned-Applications.psm1"
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+#	Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files (x86)\\Microsoft SQL Server\\120\\Tools\\Binn\\ManagementStudio\\Ssms.exe"
+#    #Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files (x86)\\Fiddler2\\Fiddler.exe"
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files\\SmartBear\\SoapUI-5.4.0\\bin\\SoapUI-5.4.0.exe"
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath c:\\windows\\system32\\inetsrv\\InetMgr.exe
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files (x86)\\Notepad++\\notepad++.exe"
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath c:\\windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe
+#    Set-PinnedApplication -Action PinToTaskbar -FilePath c:\\windows\\system32\\cmd.exe
+#	Import-Module 'c:\\users\\vagrant\\scripts\\Set-RvShortcutToRunAsAdministrator.psm1'
+#	Set-RvShortcutToRunAsAdministrator -Path 'C:\\Users\\vagrant\\AppData\\Roaming\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\Windows Command Processor.lnk' -Verbose
+#	Set-RvShortcutToRunAsAdministrator -Path 'C:\\Users\\vagrant\\AppData\\Roaming\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\Windows PowerShell.lnk' -Verbose
+#  SHELL
+  
+  config.vm.provision :reload
+  
   # TODO
-  # run windows updates
-  # small icons on desktop
-  # small icons in taskbar
   # pin apps to taskbar
+  # fiddler
   
 end
