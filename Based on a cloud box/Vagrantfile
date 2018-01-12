@@ -102,7 +102,7 @@ Vagrant.configure(2) do |config|
     Write-Host ">>> Installing development tools ..." -foreground Green
     choco install git -y
 	choco install soapui -y
-	choco install mssqlservermanagementstudio2014express -y
+	choco install sql-server-express -y
 	choco install sql-server-management-studio -y
 	choco install postgresql -y
 	choco install pgadmin4 -y
@@ -129,8 +129,8 @@ Vagrant.configure(2) do |config|
 	choco install visualstudiocode -y
   SHELL
   
-#  config.vm.provision "shell", privileged: true, inline: <<-SHELL
-#    Write-Host ">>> Pinning some applications to the taskbar ..." -foreground Green
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+    Write-Host ">>> Pinning some applications to the taskbar ..." -foreground Green
 #    Import-Module "c:\\users\\vagrant\\scripts\\Pinned-Applications.psm1"
 #    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
 #    Set-PinnedApplication -Action PinToTaskbar -FilePath "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
@@ -144,7 +144,7 @@ Vagrant.configure(2) do |config|
 #	Import-Module 'c:\\users\\vagrant\\scripts\\Set-RvShortcutToRunAsAdministrator.psm1'
 #	Set-RvShortcutToRunAsAdministrator -Path 'C:\\Users\\vagrant\\AppData\\Roaming\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\Windows Command Processor.lnk' -Verbose
 #	Set-RvShortcutToRunAsAdministrator -Path 'C:\\Users\\vagrant\\AppData\\Roaming\\Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar\\Windows PowerShell.lnk' -Verbose
-#  SHELL
+  SHELL
   
   config.vm.provision :reload
   
@@ -158,6 +158,9 @@ Vagrant.configure(2) do |config|
   #  darkest dark theme
   #  less 
   #  spotbugs
+  #  ansi Escape in console
+  # Enable SqlServer named pipes for sqlexpress
   
+  # Create a mechanism to include this vagrant file and these powershell scripts within your vagrant project specific development environment.
   
 end
