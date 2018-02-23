@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.define :user do |user_config|
+
+    # Put here your custom statements....
+
+  end
+  
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+
+    # Activate windows
+    Write-Host ">>> Fill in Windows 10 Pro product key (TODO) ..." -foreground Green
+  	# TODO!!! Fill in your windows 10 pro product key here ...
+  	# slmgr /ipk <ProductKey>
+
+    # Set correct git credentials
+    git config --global user.name "Martijn Sips"
+    git config --global user.email "martijnsips@live.nl"
+
+    git config push.default simple
+
+  SHELL
+  
+end

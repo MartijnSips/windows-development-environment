@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+
+    # Add the ssh key for this project
+
+    # Change the background desktop
+    Invoke-WebRequest -Uri "http://incurs.us/open-source-art/vagrant-wallpaper-1920x1080" -OutFile "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
+    Set-Wallpaper -value "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
+
+  SHELL
+  
+end

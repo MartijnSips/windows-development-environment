@@ -1,1 +1,13 @@
+# IntellIJ stuff
+.idea
+
+# Vagrant stuff
 .vagrant
+
+# Virtualbox stuff
+*.vmdk
+
+# Project stuff
+Host
+Vagrantfile.project
+Vagrantfile.user

@@ -1,34 +1,118 @@
-# Windows Development environment
+# Windows Development environment (based on a cloud box)
 
-The scripts in this repository will create you a local Windows development environment.
+Powered by [![Virtualbox](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/development/Logos/virtualbox.png "Virtualbox")](http://www.virtualbox.org),
+[![Vagrant](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/development/Logos/vagrant.png "Vagrant" )](http://www.vagrantup.com)
+and [![Ansible](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/development/Logos/ansible.png "Ansible")](http://www.ansible.com)
 
-Default installed on this image is:
-- Windows 10 Pro
-- Visual Studio 2017
-...
+## Purpose
 
-In order to use these scripts you'll need the following:
-- Virtualbox
-- Vagrant
-- Git (not required but handy)
+The purpose of these scripts are to easily create an Windows development environment
+which you can simply roll out multiple times and get the same image. Ready to start developing your projects.
 
-## Which type?
+These scripts will create an Windows 10 Professional development image (updated with all latest patches) and with at least the 
+following products installed:
 
-There are two ways to create a new Windows Development environment. 
+- IntellIJ (latest)
+- Eclipse Oxygen
+- SoapUI
+- Visual Studio Code
+- Postgresql
+- PHP
+- Git
+- Gitkraken
+- Maven
+- Postman
 
-### Based on a cloud box (from scratch)
+The advantage of having these scripts, is that you can destroy your image and deploy your image again if you have broken 
+something. The other thing is that in a team, all members have the same image with the same settings, thus the same 
+structure. Your code will work the same on each image.
 
-This means that a default, already existing box from the cloud is used to create your initial image. Then 
-all additional software like visual studio is installed on top of that. This might take a while to complete.
+## Prerequisites
 
-### Based on a custom cloud box
+In order to use these scripts, you need the following to be installed, although it might also work with the MacOS or 
+Linux equivalents. That is not tested though.
 
-To speed things up, we have created a packer project to create a base box on your system.
-You should create this box only once.
+- Windows 10
+- Virtual Box ([https://www.virtualbox.org](https://www.virtualbox.org/))
+- Vagrant ([https://www.vagrantup.com/](https://www.vagrantup.com/))
+- Git ([https://git-scm.com](https://git-scm.com/))
 
-Then vagrant will use that box to create your initial image. As the software is in this case already added to the base box, only the project specific stuff then needs to be deployed.
-This is the faster way.
+## How to create a new environment
 
+First download this repository to a directory of your choosing on your host.
 
+Then in a command prompt in that directory, execute the following command in this directory:
 
+```vagrant up```
 
+This will start the creation of your personal local Ubuntu Mate development environment.
+
+Each time after you have shutdown the image execute the following command:
+
+```vagrant reload```
+
+This last command will make sure that the directory mappings are also loaded.
+
+If you want to reset your image do the following:
+
+```vagrant destroy```
+
+and then
+
+```vagrant up```
+
+<b>Note:</b> On your image the Host directory is mounted in /home/vagrant/Host. This means that if you want to keep some
+files when you are going to reset your image, you can copy them in that directory and you will find them there again 
+when you have reset your image from your host.
+
+## How does it work?
+
+The complete set of scripts is set up as modular as possible.
+
+The Vagrantfile is the starting point for the `vagrant up` command. In that file is defined which base image vagrant should
+use to download.
+When that base image is downloaded it will only look whether it is the latest version if you run the `vagrant up`
+command again.
+
+Then vagrant will create an virtualbox image based on that (only once downloaded) base image and the specification in
+the vagrantfile. Hyper-V or parallels can also be configured but this is not tested or implemented.
+
+When the virtualbox image is created it will start the provisioning, also specified in the vagrant file.
+This will first update all packages on the image, and then trigger the development.yml playbook in the ansible
+directory.
+
+That development.yml playbook will then install all required packages needed for general linux development.
+
+### Vagrantfile
+
+The vagrant file is where it all begins when you do ```vagrant up```. It will first download a base box only once. Each 
+next time it will check whether there is a new version of that base box.
+
+Then it will create a new image of that base box in virtualbox.
+
+After that it will install all the required common (as we think) development tools ans preferences.
+
+#### Host directory
+
+The Host directory located in the c:\users\vagrant\Hosts directory on the guest system is mapped to the Hosts directory 
+in this directory of the Readme.md file on the host system. Via this way you can easily share multiple files with your 
+image and vice versa. 
+
+If you want to use this mapping, you'll have to use the ```vagrant reload``` command though after the first time you 
+created the development environment.
+
+### Vagrantfile.user.sample
+
+The Vagrantfile.user.sample is an example file where we can specify your specific custom configuration, like your 
+preferred ide installation, background image or other specific windows settings.  
+
+Also, your own public ssh keys for example can be created in this file.
+
+<b>Note</b>: Before you can use this copy it to Vagrantfile.user 
+
+### Vagrantfile.project.sample
+
+The Vagrantfile.project is the place where we can specify our project specific things to be downloaded.
+For example all git repositories needed for this project. 
+
+<b>Note</b>: Before you can use this copy it to Vagrantfile.project
