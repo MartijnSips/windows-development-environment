@@ -83,7 +83,6 @@ choco install winmerge -y
 choco install visualstudio2017enterprise -y
 choco install visualstudio2017-workload-netweb -y
 choco install visualstudio2017-workload-manageddesktop -y
-choco install visualstudio2017-workload-universal -y
 choco install visualstudio2017-workload-azure -y
 Invoke-WebRequest -Uri https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017 -OutFile "c:\\users\\vagrant\\Download\\TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017.vsix"
 Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe' /q .\Download\\TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017.vsix"
