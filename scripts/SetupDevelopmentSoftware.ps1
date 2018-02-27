@@ -14,6 +14,9 @@ Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'c:\windows\system32\
 #echo "- Notepad++ ..."
 #choco install notepadplusplus -y
 #Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files\Notepad++\notepad++.exe'"
+Invoke-WebRequest -Uri https://notepad-plus-plus.org/repository/7.x/7.5.4/npp.7.5.4.Installer.exe -OutFile "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe"
+Invoke-Expression "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe /S"
+Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Notepad++\notepad++.exe'"
 
 echo "- SoapUI ..."
 choco install soapui -y
@@ -109,4 +112,4 @@ choco install azure-cli -y
 choco install visualstudiocode -y
 
 choco install nodejs -y
-#Invoke-Expression "'c:\\Program Files\nodejs\npm' -i -g azure-functions-core-tools"
+Invoke-Expression "& 'c:\Program Files\nodejs\npm' i -g azure-functions-core-tools"
