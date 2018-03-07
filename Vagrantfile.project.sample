@@ -7,13 +7,21 @@
 # you're doing.
 Vagrant.configure("2") do |config|
 
+  # Overrule the default virtualbox settings
+  config.vm.provider "virtualbox" do |vb|
+    # Set the correct description
+    vb.name = "<project> Windows Development Environment"
+    vb.customize ["modifyvm", :id, "--description", "<project> Windows Development Environment"]
+  end
+
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
 
     # Change the background desktop
-    Invoke-WebRequest -Uri "http://incurs.us/open-source-art/vagrant-wallpaper-1920x1080" -OutFile "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
-    Set-Wallpaper -value "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
+    Invoke-WebRequest -Uri "http://incurs.us/open-source-art/vagrant-wallpaper-1920x1080" -OutFile "c:\users\vagrant\pictures\wallpaper.jpg"
+    Import-Module "c:\users\vagrant\scripts\Set-Wallpaper.psm1"
+    Set-Wallpaper -value "c:\users\vagrant\pictures\wallpaper.jpg"
 
-    # Download project specific repositories.
+    # Set additional project related things, like download the project specific repositories.
 
   SHELL
   

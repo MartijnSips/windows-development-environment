@@ -13,7 +13,13 @@ Vagrant.configure("2") do |config|
     vb.memory = 8192
   end
 
-  # Put here your custom statements
+  # Copy your personal ssh key into the vm
+  # For this statement to work you have to have the following file available on your host:
+  # <userhome>/.ssh/id_rsa
+  # Note: If you perform the vagrant up command twice or more, the following line will fail,
+  # as the access rights are changed a few lines below here.
+  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "~/.ssh/id_rsa"
+
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
 
     # Activate windows
