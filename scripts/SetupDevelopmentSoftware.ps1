@@ -1,5 +1,34 @@
 Import-Module "c:\\users\\vagrant\\scripts\\Set-RvShortcutToRunAsAdministrator.psm1"
 
+# Desktop icons can be a little bit smaller
+Write-Host ">>> Changing the desktop icons ..." -foreground Green
+Import-Module "c:\\users\\vagrant\\scripts\\ChangeDesktopIconSize.psm1"
+ChangeDesktopIconSize -IconSize 24
+
+# Use small taskbar icons
+Write-Host ">>> Using small taskbar icons ..." -foreground Green
+Import-Module "c:\\users\\vagrant\\scripts\\UseSmallTaskbarIcons.psm1"
+UseSmallTaskbarIcons
+
+# Install all latest windows updates
+Write-Host ">>> Running all windows updates ..." -foreground Green
+Write-Host "    Installing PSWindowsUpdate ..." -foreground Green
+Install-Module PSWindowsUpdate -force
+Write-Host "    Performing windows update ..." -foreground Green
+Get-WUInstall -AcceptAll -MicrosoftUpdate -Verbose
+
+Write-Host ">>> Enabling some windows features ..." -foreground Green
+Enable-WindowsOptionalFeature -online -featurename IIS-WebServerRole -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename IIS-ManagementScriptingTools -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename IIS-HttpRedirect -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename WCF-HTTP-Activation45 -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename WCF-TCP-Activation45 -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename WCF-Pipe-Activation45 -All -NoRestart
+Enable-WindowsOptionalFeature -online -featurename WCF-MSMQ-Activation45 -All -NoRestart
+
+Write-Host ">>> Installing chocolatey ..." -foreground Green
+iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+
 echo "- Command prompt adjustments ..."
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'c:\windows\system32\cmd.exe'"
 
@@ -78,8 +107,10 @@ Invoke-WebRequest -Uri https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerS
 Invoke-Expression "c:\\users\\vagrant\\Download\\FiddlerSetup.exe /S"
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Users\vagrant\AppData\Local\Programs\Fiddler\Fiddler.exe'"
 
-# Visual Studio 2017 and its plugins
+# Winmerge
 choco install winmerge -y
+
+# Visual Studio 2017 and its plugins
 choco install visualstudio2017enterprise -y
 choco install visualstudio2017-workload-netweb -y
 choco install visualstudio2017-workload-manageddesktop -y

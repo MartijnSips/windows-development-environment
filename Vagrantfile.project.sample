@@ -9,11 +9,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
 
-    # Add the ssh key for this project
-
     # Change the background desktop
     Invoke-WebRequest -Uri "http://incurs.us/open-source-art/vagrant-wallpaper-1920x1080" -OutFile "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
     Set-Wallpaper -value "c:\users\vagrant\pictures\vagrant-wallpaper-1920x1080.jpg"
+
+    # Download project specific repositories.
 
   SHELL
   
