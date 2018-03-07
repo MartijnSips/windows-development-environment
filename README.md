@@ -1,7 +1,7 @@
 # Windows Development environment (based on a cloud box)
 
-Powered by [![Virtualbox](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/development/Logos/virtualbox.png "Virtualbox")](http://www.virtualbox.org)
-and [![Vagrant](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/development/Logos/vagrant.png "Vagrant" )](http://www.vagrantup.com)
+Powered by [![Virtualbox](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/develop/Logos/virtualbox.png "Virtualbox")](http://www.virtualbox.org)
+and [![Vagrant](https://raw.githubusercontent.com/MartijnSips/ubuntu-development-environment/develop/Logos/vagrant.png "Vagrant" )](http://www.vagrantup.com)
 
 ## Purpose
 
