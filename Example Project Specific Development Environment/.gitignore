@@ -1,7 +1,13 @@
-# IntellIJ stuff
+# IntellIJ files
 .idea
+.iml
 
-# Vagrant stuff
+# Eclipse files
+.project
+.settings
+.classpath
+
+# Vagrant files
 .vagrant
 
 # Local files (Uncomment the following line because you don't want to check in your user version for your project.

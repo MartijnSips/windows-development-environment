@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
   # as the access rights are changed a few lines below here.
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "~/.ssh/id_rsa"
 
-  config.vm.provision "shell", privileged: true, inline: <<-SHELL
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
     # Activate windows
     Write-Host ">>> Fill in Windows 10 Pro product key (TODO) ..." -foreground Green

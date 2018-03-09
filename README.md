@@ -39,13 +39,9 @@ Linux equivalents. That is not tested though.
 
 ## How to create a new environment
 
-First download this repository to a directory of your choosing on your host.
+First download the "Example Project Specific Development Environment" directory from this repository to a directory of your choosing on your host.
 
-Then in a command prompt in that directory, execute the following command in this directory:
-
-```vagrant up```
-
-This will start the creation of your personal local Ubuntu Mate development environment.
+Follow the instructions in that README.md
 
 Each time after you have shutdown the image execute the following command:
 
