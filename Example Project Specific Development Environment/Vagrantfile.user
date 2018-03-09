@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  # Overrule the default virtualbox settings
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = "4"
+    vb.memory = "8192"
+  end
+
+  # Copy your personal ssh key into the vm
+  # For this statement to work you have to have the following file available on your host:
+  # <userhome>/.ssh/id_rsa
+  # Note: If you perform the vagrant up command twice or more, the following line will fail,
+  # as the access rights are changed a few lines below here.
+  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "~/.ssh/id_rsa"
+
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+
+  # Activate windows
+  Write-Host ">>> Fill in Windows 10 Pro product key (TODO) ..." -foreground Green
+    # TODO!!! Fill in your windows 10 pro product key here ...
+    # slmgr /ipk <ProductKey>
+
+    # Set correct git credentials
+    git config --global user.name "Martijn Sips"
+    git config --global user.email "martijnsips@live.nl"
+    git config --global push.default simple
+  SHELL
+
+end
