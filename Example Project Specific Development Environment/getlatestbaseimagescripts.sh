@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO=ubuntu-development-environment
+REPO=windows-development-environment
 BRANCH=develop
 
 curl -LkSs https://github.com/martijnsips/${REPO}/tarball/${BRANCH} -o ${REPO}-${BRANCH}.tar.gz
@@ -8,10 +8,10 @@ curl -LkSs https://github.com/martijnsips/${REPO}/tarball/${BRANCH} -o ${REPO}-$
 gzip -d ${REPO}-${BRANCH}.tar.gz
 tar -xf ${REPO}-${BRANCH}.tar
 
-cd MartijnSips-ubuntu-development-environment-*
+cd MartijnSips-windows-development-environment-*
 cp -f Vagrantfile* ..
-cp -rf Ansible ..
+cp -rf scripts ..
 cd ..
-rm -rf MartijnSips-ubuntu-development-environment-*
+rm -rf MartijnSips-windows-development-environment-*
 rm -rf pax_global_header
 rm ${REPO}-${BRANCH}.tar

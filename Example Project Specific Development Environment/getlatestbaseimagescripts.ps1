@@ -1,4 +1,4 @@
-$repo="ubuntu-development-environment"
+$repo="windows-development-environment"
 $branch="develop"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -7,6 +7,6 @@ Invoke-WebRequest -Uri "https://github.com/MartijnSips/$repo/archive/$branch.zip
 Expand-Archive -Path $repo-$branch.zip -DestinationPath . -Force
 
 Copy-Item "$repo-$branch\Vagrantfile*" -Destination . -Force
-Copy-Item "$repo-$branch\Ansible" -Recurse -Destination . -Force
+Copy-Item "$repo-$branch\scripts*" -Destination . -Force
 
 Remove-Item $repo-$branch* -Recurse -Force
