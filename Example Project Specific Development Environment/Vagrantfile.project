@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "Example Project Windows Development Environment"
+
+    vb.customize ["modifyvm", :id, "--description", "Example Project Windows Development Environment"]
+  end
+
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    Write-Host ">>> Installing Example Project specific software ..." -foreground Green
+    Invoke-Expression "c:\\users\\vagrant\\scripts\\ExampleProject\SetupExampleProject.ps1"
+  SHELL
+
+end
