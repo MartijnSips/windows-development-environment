@@ -1,9 +1,12 @@
+$repo="ubuntu-development-environment"
+$branch="develop"
+
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://github.com/MartijnSips/ubuntu-development-environment/archive/development.zip" -OutFile "ubuntu-development-environment-development.zip"
+Invoke-WebRequest -Uri "https://github.com/MartijnSips/$repo/archive/$branch.zip" -OutFile "$repo-$branch.zip"
 
-Expand-Archive -Path ubuntu-development-environment-development.zip -DestinationPath . -Force
+Expand-Archive -Path $repo-$branch.zip -DestinationPath . -Force
 
-Copy-Item "ubuntu-development-environment-development\Vagrantfile*" -Destination . -Force
-Copy-Item "ubuntu-development-environment-development\Ansible" -Recurse -Destination . -Force
+Copy-Item "$repo-$branch\Vagrantfile*" -Destination . -Force
+Copy-Item "$repo-$branch\Ansible" -Recurse -Destination . -Force
 
-Remove-Item ubuntu-development-environment-development* -Recurse -Force
+Remove-Item $repo-$branch* -Recurse -Force

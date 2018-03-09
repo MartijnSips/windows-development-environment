@@ -1,9 +1,12 @@
 #!/bin/bash
 
-curl -LkSs https://github.com/martijnsips/ubuntu-development-environment/tarball/development -o ubuntu-development-environment-development.tar.gz
+REPO=ubuntu-development-environment
+BRANCH=develop
 
-gzip -d ubuntu-development-environment-development.tar.gz
-tar -xf ubuntu-development-environment-development.tar
+curl -LkSs https://github.com/martijnsips/${REPO}/tarball/${BRANCH} -o ${REPO}-${BRANCH}.tar.gz
+
+gzip -d ${REPO}-${BRANCH}.tar.gz
+tar -xf ${REPO}-${BRANCH}.tar
 
 cd MartijnSips-ubuntu-development-environment-*
 cp -f Vagrantfile* ..
@@ -11,4 +14,4 @@ cp -rf Ansible ..
 cd ..
 rm -rf MartijnSips-ubuntu-development-environment-*
 rm -rf pax_global_header
-rm ubuntu-development-environment-development.tar
+rm ${REPO}-${BRANCH}.tar
