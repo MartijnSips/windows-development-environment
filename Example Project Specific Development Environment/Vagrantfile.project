@@ -10,6 +10,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    # Change the background desktop
+    Invoke-WebRequest -Uri "http://incurs.us/open-source-art/vagrant-wallpaper-1920x1080" -OutFile "c:\users\vagrant\pictures\wallpaper.jpg"
+    Import-Module "c:\users\vagrant\scripts\Set-Wallpaper.psm1"
+    Set-Wallpaper -value "c:\users\vagrant\pictures\wallpaper.jpg"
+
     Write-Host ">>> Installing Example Project specific software ..." -foreground Green
     Invoke-Expression "c:\\users\\vagrant\\scripts\\ExampleProject\SetupExampleProject.ps1"
   SHELL

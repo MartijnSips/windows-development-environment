@@ -27,15 +27,12 @@ Vagrant.configure(2) do |config|
   config.vbguest.no_remote = false
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "vdelarosa/windows-10"
+  config.vm.box = "martijnsips/Win10Pro"
 
   config.vm.guest = :windows
   config.vm.communicator = "winrm"
   config.vm.boot_timeout = 600
   config.vm.graceful_halt_timeout = 600
-
-  #config.vm.network :forwarded_port, guest: 3389, host: 3389
-  #config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "Windows Development Environment"
@@ -59,18 +56,6 @@ Vagrant.configure(2) do |config|
     # Add cdrom disk
     vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "1", "--type", "dvddrive", "--medium", "emptydrive"]
 
-    # Currently there is a problem. Because we use the reload plugin second time the vm boots, the disk is created again. (Which we do not want). Damn!
-    # Add a data hard disk
-    #disk = 'DataDiskD.vdi'
-    #unless File.exist?(disk)
-    #  vb.customize ['createhd', '--filename', disk, '--size', 40*1024]
-    #  vb.customize ['storageattach', :id, '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
-    #end
-
-    #file_to_disk = "diskd.vdi"
-    #vb.customize ["createhd", "--filename", file_to_disk, "--size", 40 * 1024] unless File.exist?(file_to_disk)
-    #vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", file_to_disk]
-
   end
 
   config.vm.provider "parallels" do |prl|
@@ -80,26 +65,15 @@ Vagrant.configure(2) do |config|
     prl.memory = 2086
   end
 
-  #config.vm.synced_folder "#{ENV['USERPROFILE']}\Documents", 'c:\users\vagrant\Documents', owner: "vagrant", group: "vagrant", create: true
-  #config.vm.synced_folder "#{ENV['USERPROFILE']}\Downloads", 'c:\users\vagrant\Downloads', owner: "vagrant", group: "vagrant", create: true
-
   config.vm.synced_folder "scripts", 'c:\users\vagrant\scripts', owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "Host", 'c:\users\vagrant\Host', create: true, owner: "vagrant", group: "vagrant"
-
-  config.vm.provision "shell", privileged: true, inline: <<-SHELL
-
-	Write-Host ">>> Switch keyboard layout ..." -foreground Green
-	Set-WinUserLanguageList -LanguageList en-US -force
-
-	#Write-Host ">>> Formatting Data Disk ..." -foreground Green
-	#Get-Disk | Where PartitionStyle -eq 'raw' | Initialize-Disk -PartitionStyle MBR -PassThru | New-Partition -AssignDriveLetter -UseMaximumSize | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data Disk"
-  SHELL
 
   config.vm.provision :reload
 
   config.vm.provision "shell", privileged: true, inline: <<-SHELL
-    Write-Host ">>> Installing development tools ..." -foreground Green
-    Invoke-Expression "c:\\users\\vagrant\\scripts\\SetupDevelopmentSoftware.ps1"
+    Invoke-Expression "c:\\users\\vagrant\\scripts\\SetupCommonDevelopmentSoftware.ps1"
+    Invoke-Expression "c:\\users\\vagrant\\scripts\\SetupJavaDevelopmentSoftware.ps1"
+    Invoke-Expression "c:\\users\\vagrant\\scripts\\SetupWindowsDevelopmentSoftware.ps1"
   SHELL
 
   config.vm.provision :reload
