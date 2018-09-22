@@ -83,3 +83,7 @@ choco install visualstudiocode -y
 # Install keepass
 choco install keepass -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\KeePass Password Safe 2\keepass.exe'"
+
+# Cmder
+choco install cmder -y
+Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\tools\cmder\cmder.exe'"

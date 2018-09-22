@@ -23,6 +23,7 @@ choco install visualstudio2017-workload-netweb -y
 choco install visualstudio2017-workload-manageddesktop -y
 choco install visualstudio2017-workload-azure -y
 choco install visualstudio2017-workload-universal -y
+choco install visualstudio2017-workload-webbuildtools -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe'"
 Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Visual Studio 2017.lnk' -Verbose
 
