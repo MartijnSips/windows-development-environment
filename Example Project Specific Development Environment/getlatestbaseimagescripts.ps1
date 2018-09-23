@@ -1,12 +1,14 @@
 $repo="windows-development-environment"
 $branch="develop"
+$targetDir = $env:temp
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri "https://github.com/MartijnSips/$repo/archive/$branch.zip" -OutFile "$repo-$branch.zip"
+Invoke-WebRequest -Uri "https://github.com/MartijnSips/$repo/archive/$branch.zip" -OutFile "$targetDir\$repo-$branch.zip"
 
-Expand-Archive -Path $repo-$branch.zip -DestinationPath . -Force
+$currentDir = (Get-Item -Path ".\").FullName
+Expand-Archive -Path "$targetDir\$repo-$branch.zip" -DestinationPath "$targetDir" -Force
 
-Copy-Item "$repo-$branch\Vagrantfile*" -Destination . -Force
-Copy-Item "$repo-$branch\scripts*" -Destination . -Force -Recurse
+Copy-Item "$targetDir\$repo-$branch\Vagrantfile*" -Destination "$currentDir" -Force
+Copy-Item "$targetDir\$repo-$branch\scripts*" -Destination "$currentDir" -Force -Recurse
 
-Remove-Item $repo-$branch* -Recurse -Force
+Remove-Item "$targetDir\$repo-$branch*" -Recurse -Force
