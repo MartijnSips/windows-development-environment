@@ -9,7 +9,7 @@ Write-Host "- Eclipse and its plugins ..."
 choco install eclipse -y
 $eclipsedir=(gci "C:\Program Files\eclipse*" | ? { $_.PSIsContainer } | sort CreationTime)[-1].Name
 Invoke-Expression "& 'C:\Program Files\${eclipsedir}\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository http://cucumber.github.io/cucumber-eclipse/update-site -installIUs cucumber.eclipse.feature.feature.group"
-Invoke-Expression "& 'C:\Program Files\v\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository https://otto.takari.io/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.17.2/N/LATEST/ -installIUs org.sonatype.m2e.mavenarchiver.feature.feature.group"
+Invoke-Expression "& 'C:\Program Files\${eclipsedir}\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository https://otto.takari.io/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.17.2/N/LATEST/ -installIUs org.sonatype.m2e.mavenarchiver.feature.feature.group"
 Invoke-Expression "& 'C:\Program Files\${eclipsedir}\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository http://eclipse-cs.sourceforge.net/update -installIUs net.sf.eclipsecs.feature.group"
 Invoke-Expression "& 'C:\Program Files\${eclipsedir}\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository http://findbugs.cs.umd.edu/eclipse -installIUs edu.umd.cs.findbugs.plugin.eclipse.feature.group"
 Invoke-Expression "& 'C:\Program Files\${eclipsedir}\eclipse\eclipse.exe' -nosplash -application org.eclipse.equinox.p2.director -repository http://www.sonarlint.org/eclipse -installIUs org.sonarlint.eclipse.feature.feature.group"
