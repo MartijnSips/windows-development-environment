@@ -1,0 +1,7 @@
+<extensions>
+  <extension name="SpecFlow for Visual Studio 2013" version="14" url="https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017" />
+  <extension name="GitFlow for Visual Studio 2017" version="14" url="https://marketplace.visualstudio.com/items?itemName=vs-publisher-57624.GitFlowforVisualStudio2017" />
+  <extension name="Web Essentials 2017" version="14" url="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebExtensionPack2017" />
+  <extension name="Productivity Power Tools 2017/2019" version="14" url="https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.ProductivityPowerPack2017" />
+  <extension name="EF Core Power Tools" version="14" url="https://marketplace.visualstudio.com/items?itemName=ErikEJ.EFCorePowerTools" />
+</extensions>

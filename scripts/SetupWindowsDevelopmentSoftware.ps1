@@ -13,6 +13,7 @@ echo "- IIS ..."
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'c:\windows\system32\inetsrv\InetMgr.exe'"
 
 echo "- SQL Server Express + Management studio ..."
+choco install vcredist2017 -y
 choco install sql-server-express -y
 choco install sql-server-management-studio -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\Ssms.exe'"
@@ -27,18 +28,17 @@ choco install visualstudio2017-workload-webbuildtools -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe'"
 Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Visual Studio 2017.lnk' -Verbose
 
+# Extensions
+#cinst batch-install-vsix -params "c:\users\vagrant\scripts\vs2017extensions.xml"
+
 # Specflow
-#Invoke-WebRequest -Uri https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017 -OutFile "c:\\users\\vagrant\\Downloads\\TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017.vsix"
-#Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe' /q .\Downloads\\TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017.vsix"
-# Wix
-#choco install wixtoolset -y
 # Productivity Power Tools
-#Invoke-WebRequest -Uri https://marketplace.visualstudio.com/items?itemName=VisualStudioProductTeam.ProductivityPowerTools -OutFile "c:\\users\\vagrant\\Downloads\\ProPowerTools.vsix"
-#Invoke-Expression "& 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe' /q .\Downloads\\ProPowerTools.vsix"
 # Powershell Tools
 # Wix Toolset Visual Studio 2017 Extension
 # Web Essentials
 # EF Core Power Tools
-# Resharper
+
+# Resharper plugin for visual studio
+choco install resharper -y
 
 choco install azure-cli -y
