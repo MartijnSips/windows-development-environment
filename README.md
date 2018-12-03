@@ -5,27 +5,28 @@ and [![Vagrant](https://raw.githubusercontent.com/MartijnSips/ubuntu-development
 
 ## Purpose
 
-The purpose of these scripts are to easily create an Windows development environment
-which you can simply roll out multiple times and get the same image. Ready to start developing your projects.
+The purpose of these scripts are to easily create an Windows development environment which you can simply roll out multiple times and get the same image. Ready to start developing your projects.
 
 These scripts will create an Windows 10 Professional development image (updated with all latest patches) and with at least the 
 following products installed:
 
-- IntellIJ (latest)
-- Eclipse Oxygen
+- IntellIJ
+- Eclipse (including some plugins)
 - SoapUI
 - Visual Studio
 - Visual Studio Code
+- SQL Server
 - Postgresql
 - PHP
 - Git
 - Gitkraken
 - Maven
 - Postman
+- Cmder
+- JMeter
+- ngRemote
 
-The advantage of having these scripts, is that you can destroy your image and deploy your image again if you have broken 
-something. The other thing is that in a team, all members have the same image with the same settings, thus the same 
-structure. Your code will work the same on each image.
+The advantage of having these scripts, is that you can destroy your image and deploy your image again if you have broken something. The other thing is that in a team, all members have the same image with the same settings, thus the same structure. Your code will work the same on each image.
 
 ## Prerequisites
 
@@ -35,13 +36,13 @@ Linux equivalents. That is not tested though.
 - Windows 10
 - Virtual Box ([https://www.virtualbox.org](https://www.virtualbox.org/))
 - Vagrant ([https://www.vagrantup.com/](https://www.vagrantup.com/))
-- Git ([https://git-scm.com](https://git-scm.com/))
+- Git ([https://git-scm.com](https://git-scm.com/)) (Needed to download this repository.)
 
 ## How to create a new environment
 
-First download the "Example Project Specific Development Environment" directory from this repository to a directory of your choosing on your host.
+First download the "Example Project Specific Development Environment" directory from this repository to a directory of your choosing on your host. Make sure you download the scripts and not the html files :-).
 
-Follow the instructions in that README.md
+Follow the instructions in that README.md.
 
 Each time after you have shutdown the image execute the following command:
 
