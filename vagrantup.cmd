@@ -1,0 +1,1 @@
+vagrant up --debug 2>&1 | Tee-Object -FilePath ".\vagrant.log"
