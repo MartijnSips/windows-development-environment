@@ -29,16 +29,16 @@ Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'c:\windows\system32\
 Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Windows PowerShell.lnk' -Verbose
 
 # Currently there is a problem with the deployment of Notepad++ via chocolatey
-#echo "- Notepad++ ..."
-#choco install notepadplusplus -y
-#Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files\Notepad++\notepad++.exe'"
-Invoke-WebRequest -Uri https://notepad-plus-plus.org/repository/7.x/7.5.4/npp.7.5.4.Installer.exe -OutFile "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe"
-Invoke-Expression "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe /S"
-Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Notepad++\notepad++.exe'"
+echo "- Notepad++ ..."
+choco install notepadplusplus -y
+Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files\Notepad++\notepad++.exe'"
+#Invoke-WebRequest -Uri https://notepad-plus-plus.org/repository/7.x/7.5.4/npp.7.5.4.Installer.exe -OutFile "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe"
+#Invoke-Expression "c:\\users\\vagrant\\Downloads\\npp.7.5.4.Installer.exe /S"
+#Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Notepad++\notepad++.exe'"
 
 echo "- SoapUI ..."
 choco install soapui -y
-Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files\SmartBear\SoapUI-5.4.0\bin\SoapUI-5.4.0.exe'"
+Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files\SmartBear\SoapUI-5.5.0\bin\SoapUI-5.5.0.exe'"
 
 echo "- Git ..."
 choco install git -y

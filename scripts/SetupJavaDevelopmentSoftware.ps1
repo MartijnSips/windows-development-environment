@@ -46,4 +46,3 @@ choco install jmeter -y
 [Environment]::SetEnvironmentVariable("JMETER_HOME", "%ChocolateyInstall%\lib\jmeter\tools\apache-jmeter-4.0\", "Machine")
 
 choco install ngRemote -y
-
