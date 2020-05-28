@@ -1,4 +1,4 @@
-choco install dotnetcore-sdk
+choco install dotnetcore-sdk -y
 
 Import-Module "c:\\users\\vagrant\\scripts\\Set-RvShortcutToRunAsAdministrator.psm1"
 
