@@ -1,3 +1,5 @@
+choco install dotnetcore-sdk
+
 Import-Module "c:\\users\\vagrant\\scripts\\Set-RvShortcutToRunAsAdministrator.psm1"
 
 Write-Host ">>> Enabling some windows features ..." -foreground Green

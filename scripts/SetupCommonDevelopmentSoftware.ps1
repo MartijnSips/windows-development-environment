@@ -87,3 +87,6 @@ Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x8
 # Cmder
 choco install cmder -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\tools\cmder\cmder.exe'"
+
+# Draw.io
+choco install drawio -y
