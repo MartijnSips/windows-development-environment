@@ -27,6 +27,7 @@ choco install visualstudio2019-workload-manageddesktop -y
 choco install visualstudio2019-workload-azure -y
 choco install visualstudio2019-workload-universal -y
 choco install visualstudio2019-workload-webbuildtools -y
+choco install dotnetcore-windowshosting -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe'"
 Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Visual Studio 2019.lnk' -Verbose
 
