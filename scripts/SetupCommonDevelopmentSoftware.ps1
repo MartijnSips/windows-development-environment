@@ -76,6 +76,21 @@ Invoke-Expression "& 'c:\Program Files\nodejs\npm' i -g grunt-cli"
 
 # Visual studio code.
 choco install visualstudiocode -y
+code --install-extension ms-dotnettools.csharp # C# Language Support
+code --install-extension ms-vscode.powershell              # Powershell Language Support
+code --install-extension mads-hartmann.bash-ide-vscode     # Bash IDE
+code --install-extension tomaciazek.ansible                # Ansible Language Support
+code --install-extension puppet.puppet-vscode              # Puppet
+code --install-extension amillard98.specflow-tools         # Specflow tools
+code --install-extension ms-azure-devops.azure-pipelines   # Azure pipelines
+code --install-extension yzhang.markdown-all-in-one        # Markdown
+code --install-extension hsse-development.gitversionview   # GitVersion view
+code --install-extension polymer.polymer-ide               # Polymer IDE
+code --install-extension ms-mssql.mssql                    # SQL Server (mssql)
+code --install-extension redhat.vscode-yaml                # YAML
+code --install-extension ms-azuretools.vscode-docker       # Docker
+code --install-extension ms-python.python                  # Python
+code --install-extension 4ops.terraform                    # Terraform
 
 # Install keepass
 choco install keepass -y

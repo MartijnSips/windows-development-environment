@@ -20,16 +20,16 @@ choco install sql-server-express -y
 choco install sql-server-management-studio -y
 Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft SQL Server\140\Tools\Binn\ManagementStudio\Ssms.exe'"
 
-# Visual Studio 2019 and its plugins
-choco install visualstudio2019enterprise -y
-choco install visualstudio2019-workload-netweb -y
-choco install visualstudio2019-workload-manageddesktop -y
-choco install visualstudio2019-workload-azure -y
-choco install visualstudio2019-workload-universal -y
-choco install visualstudio2019-workload-webbuildtools -y
+# Visual Studio 2022 and its plugins
+choco install visualstudio2022enterprise -y
+choco install visualstudio2022-workload-netweb -y
+choco install visualstudio2022-workload-manageddesktop -y
+choco install visualstudio2022-workload-azure -y
+choco install visualstudio2022-workload-universal -y
+choco install visualstudio2022-workload-webbuildtools -y
 choco install dotnetcore-windowshosting -y
-Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\devenv.exe'"
-Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Visual Studio 2019.lnk' -Verbose
+Invoke-Expression "c:\users\vagrant\scripts\taskbarpin.vbs 'C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe'"
+Set-RvShortcutToRunAsAdministrator -Path 'C:\Users\vagrant\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Visual Studio 2022.lnk' -Verbose
 
 # Specflow
 #Invoke-WebRequest -Uri https://marketplace.visualstudio.com/items?itemName=TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017 -OutFile "c:\\users\\vagrant\\Downloads\\TechTalkSpecFlowTeam.SpecFlowforVisualStudio2017.vsix"
